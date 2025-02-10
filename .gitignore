@@ -54,4 +54,8 @@ app.*.map.json
 **.mocks.dart
 **.freezed.dart
 **.g.dart
+**.gr.dart
+**.config.dart
+**.config.gr.dart
+**.gen.dart
 /test_results

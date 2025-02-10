@@ -130,6 +130,7 @@ class _StoreTaskFormState extends State<StoreTaskForm> {
         );
 
         if (!_isValidTime(pickedTime, pickedDate)) {
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Please select a time at least 2 minutes from now'),
