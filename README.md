@@ -7,6 +7,10 @@ A modern Flutter application demonstrating Clean Architecture and BLoC pattern i
 - Secure Authentication
 - Offline Functionality
 - Real-time Data Sync
+- Task Reminders
+  - Notification 5 minutes before deadline
+  - Customizable notification sound
+  - Background notification support
 
 ## Architecture Overview
 The app follows Clean Architecture principles with three main layers:
@@ -22,6 +26,7 @@ The app follows Clean Architecture principles with three main layers:
 - API Client: `dio`
 - Navigation: `auto_route`
 - Code Gen: `build_runner`, `freezed`
+- Notifications: `awesome_notifications`
 
 ## Project Structure
 ```
