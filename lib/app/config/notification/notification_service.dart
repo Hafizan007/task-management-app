@@ -89,7 +89,7 @@ class NotificationService {
     );
   }
 
-  static Future<void> cancleTask(String taskId) async {
+  Future<void> cancleTask(String taskId) async {
     final isNotificationActive =
         await AwesomeNotifications().listScheduledNotifications();
 

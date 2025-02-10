@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../config/notification/notification_service.dart';
 import '../../../domain/entities/task_entity.dart';
 import '../../../domain/params/delete_task_params.dart';
 import '../../../domain/params/get_task_params.dart';
@@ -17,11 +18,13 @@ class ListTaskCubit extends Cubit<ListTaskState> {
   final ListTaskUsecase listTaskUsecase;
   final UpdateTaskUsecase updateTaskUsecase;
   final DeleteTaskUsecase deleteTaskUsecase;
+  final NotificationService notificationService;
 
   ListTaskCubit({
     required this.listTaskUsecase,
     required this.updateTaskUsecase,
     required this.deleteTaskUsecase,
+    required this.notificationService,
   }) : super(ListTaskInitial());
 
   List<TaskEntity> taskList = [];
@@ -87,7 +90,10 @@ class ListTaskCubit extends Cubit<ListTaskState> {
 
     result.fold(
       (failure) => emit(ListTaskFailure(message: failure.message)),
-      (data) => getListTask(),
+      (data) {
+        notificationService.cancleTask(taskId);
+        getListTask();
+      },
     );
   }
 }
