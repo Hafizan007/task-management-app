@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:management_app/app/features/task_management/data/models/task_model.dart';
 import 'package:management_app/app/features/task_management/data/repositories/task_management_repository_impl.dart';
 import 'package:management_app/app/features/task_management/domain/entities/task_entity.dart';
 import 'package:management_app/app/features/task_management/domain/params/store_task_params.dart';
@@ -32,17 +33,25 @@ void main() {
       dueDate: DateTime.now(),
     );
 
+    final taskModel = TaskModel(
+      id: '1',
+      taskStatus: 'pending',
+      title: 'title',
+      description: 'description',
+      dueDate: DateTime.now(),
+    );
+
     test(
         'should return TaskEntity when store task is successful and internet connetcted',
         () async {
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(mockRemoteDataSource.storeTaskData(any)).thenAnswer((_) async => {});
       when(mockLocalDataSource.storeTaskManagementData(any))
-          .thenAnswer((_) async => {});
+          .thenAnswer((_) async => taskModel);
 
       final result = await repository.storeTaskData(params);
 
-      expect(result, const Right(null));
+      expect(result, Right(taskModel.toDomain()));
 
       verify(mockRemoteDataSource.storeTaskData(any));
       verify(mockLocalDataSource.storeTaskManagementData(any));

@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../features/auth/data/model/user_local_model.dart';
 import '../../features/profile/data/models/profile_local_model.dart';
 import '../injection/injection.dart';
+import '../notification/notification_service.dart';
 import '../services/sync_service.dart';
 import 'env.dart';
 

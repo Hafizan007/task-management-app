@@ -33,10 +33,11 @@ class TaskManagementRepositoryImpl implements TaskManagementRepository {
   });
 
   @override
-  Future<Either<Failure, void>> storeTaskData(StoreTaskParams params) async {
+  Future<Either<Failure, TaskEntity>> storeTaskData(
+      StoreTaskParams params) async {
     try {
       final taskModel = TaskStoreRequestModel.fromDomain(params);
-      await localDataSource.storeTaskManagementData(taskModel);
+      final result = await localDataSource.storeTaskManagementData(taskModel);
 
       if (await networkInfo.isConnected) {
         await remoteDatasource.storeTaskData(taskModel);
@@ -49,7 +50,7 @@ class TaskManagementRepositoryImpl implements TaskManagementRepository {
           ),
         );
       }
-      return const Right(null);
+      return Right(result.toDomain());
     } on CacheException catch (e) {
       return Left(CacheFailure(e.message));
     } catch (e) {

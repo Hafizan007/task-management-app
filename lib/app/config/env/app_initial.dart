@@ -11,6 +11,8 @@ abstract class AppInitial {
     runZonedGuarded(() async {
       WidgetsFlutterBinding.ensureInitialized();
 
+      await NotificationService.initializenotification();
+
       await AppEnvironment().getCurrentEnv();
       configureInjection();
 

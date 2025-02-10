@@ -12,7 +12,7 @@ import '../../models/task_store_request_model.dart';
 import '../../models/task_update_request_model.dart';
 
 abstract class TaskManagementLocalDataSource {
-  Future<void> storeTaskManagementData(
+  Future<TaskModel> storeTaskManagementData(
     TaskStoreRequestModel taskStoreRequestModel,
   );
 
@@ -37,16 +37,18 @@ class TaskManagementLocalDataSourceImpl
   });
 
   @override
-  Future<void> storeTaskManagementData(
+  Future<TaskModel> storeTaskManagementData(
     TaskStoreRequestModel taskStoreRequestModel,
   ) async {
+    final taskData = taskStoreRequestModel.toJson();
     try {
       final db = await databaseHelper.database;
       await db.insert(
         DbConstant.taskTable,
-        taskStoreRequestModel.toJson(),
+        taskData,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
+      return TaskModel.fromJson(taskData);
     } catch (e) {
       throw CacheException(
         message: e.toString(),

@@ -11,8 +11,8 @@ import '../../models/task_update_request_model.dart';
 
 abstract class TaskManagementRemoteDataSource {
   Future<TaskModel> getTaskManagementData();
-  Future<void> storeTaskData(TaskStoreRequestModel taskModel);
-  Future<void> updateTaskData(TaskUpdateRequestModel taskModel);
+  Future<void> storeTaskData(TaskStoreRequestModel taskData);
+  Future<void> updateTaskData(TaskUpdateRequestModel taskData);
 }
 
 @LazySingleton(as: TaskManagementRemoteDataSource)
@@ -49,11 +49,12 @@ class TaskManagementRemoteDataSourceImpl
   }
 
   @override
-  Future<void> storeTaskData(TaskStoreRequestModel taskModel) async {
+  Future<void> storeTaskData(TaskStoreRequestModel taskData) async {
     try {
+      final taskDataSubmit = taskData.toJson();
       await dio.post(
         "${AppNetwork().baseUrl}${AppEndPoint.task}",
-        data: taskModel.toJson(),
+        data: taskDataSubmit,
       );
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
@@ -73,11 +74,11 @@ class TaskManagementRemoteDataSourceImpl
   }
 
   @override
-  Future<void> updateTaskData(TaskUpdateRequestModel taskModel) async {
+  Future<void> updateTaskData(TaskUpdateRequestModel taskData) async {
     try {
       await dio.put(
         "${AppNetwork().baseUrl}${AppEndPoint.task}",
-        data: taskModel.toJson(),
+        data: taskData.toJson(),
       );
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {

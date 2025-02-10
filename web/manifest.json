@@ -1,6 +1,6 @@
 {
-    "name": "starter_project",
-    "short_name": "starter_project",
+    "name": "management_task_app",
+    "short_name": "management_task_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
